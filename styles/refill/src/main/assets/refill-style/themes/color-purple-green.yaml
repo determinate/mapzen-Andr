@@ -1,0 +1,314 @@
+global:
+    # GREEN IV
+    black_color:                [0.467,0.855,0.808]
+    dark_color:                 [0.404,0.737,0.694]
+    mid_color:                  [0.349,0.627,0.592]
+    midlight_color:             [0.294,0.518,0.489]
+    light_color:                [0.275,0.447,0.424]
+    lighter_color:              [0.220,0.345,0.329]
+    lightest_color:             [0.188,0.267,0.259]
+    ultralight_color:           [0.118,0.157,0.153]
+    offwhite_color:             [0.094,0.125,0.122]
+    white_color:                [0.063,0.083,0.081]
+    transparent:                [0.303,0.862,0.794,0.250]
+    route_line:                 [0.000,0.500,1.000]
+
+    # VIOLET II
+    two_color_black:            [0.106,0.082,0.153]
+    two_color_dark:             [0.133,0.102,0.196]
+    two_color_mid:              [0.153,0.114,0.220]
+    two_color_midlight:         [0.173,0.129,0.251]
+    two_color_light:            [0.230,0.173,0.332]
+    two_color_lighter:          [0.255,0.192,0.369]
+    two_color_lightest:         [0.388,0.294,0.565]
+    two_color_ultralight:       [0.465,0.352,0.676]
+    two_color_offwhite:         [0.569,0.431,0.824]
+    two_color_white:            [0.690,0.524,1.000]
+
+    # To make Refill's colorize-able icons play nice with other styles
+    # we re-state the global here in the Refill color theme to use colorized_icons.
+    # This allows the Refill color theme to import *after* say Walkabout icons
+    # and then colorize Walkabout's icons. But when imported before Walkabout icons
+    # then Walkabout icons would not be colorized as Walkabout icons re-set the
+    # global to "" (null).
+    sdk_icon_color_style: colorized_icons
+
+layers:
+    water:
+        draw:
+            polygons:
+                style: waves
+                color: global.two_color_black
+        later:
+            draw:
+                polygons:
+                    style: waves
+                    color: global.two_color_black
+
+        lakes:
+            draw:
+                polygons:
+                    style: waves
+                    color: global.two_color_black
+
+        other-water-areas:
+            draw:
+                polygons:
+                    style: waves
+                    color: global.two_color_black
+
+        swimming_pool:
+            draw:
+                polygons:
+                    style: waves
+                    color: global.two_color_black
+
+        water-boundary-ocean:
+            draw:
+                lines:
+                    style: coast
+                    color: global.two_color_offwhite
+
+        water_boundaries-not-ocean:
+            draw:
+                lines:
+                    style: coast
+                    color: global.two_color_offwhite
+            riverbank:
+                draw:
+                    lines:
+                        style: coast
+                        color: global.two_color_offwhite
+
+    roads:
+        arrows:
+            draw:
+                arrows:
+                    color: global.two_color_lightest
+
+        railway:
+            draw:
+                lines:
+                    style: railway_dash
+                    color: global.two_color_light
+
+        airport-lines:
+            draw:
+                lines:
+                    color: global.two_color_offwhite
+            taxiway:
+                draw:
+                    lines:
+                        color: global.two_color_light
+
+        ferry:
+            draw:
+                lines:
+                    color: global.two_color_ultralight
+
+    buildings:
+        draw:
+            polygons:
+                color: global.white_color
+            lines:
+                # color: global.two_color_lightest
+                color: [[14, global.two_color_lightest], [18, global.two_color_offwhite]]
+
+        footprints:
+            extrude:
+                draw:
+                    polygons:
+                        color: global.white_color
+                    lines:
+                        # color: global.two_color_lightest
+                        color: [[14, global.two_color_lightest], [18, global.two_color_offwhite]]
+
+    landuse:
+        national_park:
+            draw:
+                polygons:
+                    style: dots
+                    color: global.two_color_midlight
+
+        parks-and-national-forests-not-national-park:
+            draw:
+                polygons:
+                    style: dots
+                    color: global.two_color_lighter
+
+        farm:
+            draw:
+                polygons:
+                    style: tiny-dots
+                    color: global.two_color_dark
+
+        university:
+            draw:
+                polygons:
+                    style: dots-rev
+                    color: global.two_color_midlight
+
+        cemetery:
+            draw:
+                polygons:
+                    style: tiny-dots
+                    color: global.two_color_lighter
+
+        golf_course:
+            draw:
+                polygons:
+                    style: medium-dots
+                    color: global.two_color_light
+
+        hospital:
+            draw:
+                polygons:
+                    style: medium-dots
+                    color: global.two_color_midlight
+
+        recreation_ground:
+            draw:
+                polygons:
+                    style: dots-rev-grid
+                    color: global.two_color_midlight
+
+        zoo:
+            draw:
+                polygons:
+                    style: tiny-dots
+                    color: global.lighter_color
+        garden:
+            draw:
+                polygons:
+                    style: tiny-dots
+                    color: global.two_color_light
+
+        parking:
+            draw:
+                polygons:
+                    style: horizontal-bars-rev
+                    color: global.two_color_dark
+
+        pitch:
+            draw:
+                polygons:
+                    style: tiny-dots
+                    color: global.two_color_lighter
+                outline:
+                    color: global.two_color_lighter
+
+        playground:
+            draw:
+                polygons:
+                    style: dots-rev
+                    color: global.two_color_light
+
+        school:
+            draw:
+                polygons:
+                    style: dots-rev
+                    color: global.two_color_midlight
+
+        landuse-not-filtered:
+            runway:
+                draw:
+                    polygons:
+                        color: global.two_color_offwhite
+
+        retaining_wall:
+            draw:
+                lines:
+                    color: global.two_color_light
+
+    boundaries:
+        country:
+            draw:
+                country-outerline:
+                    color: global.two_color_lightest
+
+        other_country_boundary_disputed_etc:
+            draw:
+                dashed:
+                    color: global.two_color_lightest
+            disputed:
+                draw:
+                    dashed_big:
+                        color: global.two_color_lightest
+
+        region:
+            draw:
+                lines:
+                    color: global.two_color_light
+
+
+styles:
+    railway_dash:
+        base: lines
+        dash: [0.25, 1.0]
+        dash_background_color: global.two_color_dark
+
+    building-grid:
+        shaders:
+            uniforms:
+                u_grid_color: global.two_color_white
+
+    waves:
+        shaders:
+            uniforms:
+                u_lighter: global.two_color_black
+                u_lightest: global.two_color_lightest
+
+    coast:
+        shaders:
+            defines:
+                OPACITY: 1.0
+
+    dots:
+        shaders:
+            defines:
+                COLOR1: vec3(0.000,0.000,0.000)
+                COLOR2: color.rgb
+
+    pixel-pattern-light:
+        shaders:
+            uniforms:
+                u_tint: [0.086,0.067,0.124]
+
+    pixel-pattern-bright:
+        shaders:
+            uniforms:
+                u_tint: [0.086,0.067,0.124]
+
+    medium-dots:
+        shaders:
+            defines:
+                COLOR1: vec3(0.000,0.000,0.000)
+
+    tiny-dots:
+        shaders:
+            defines:
+                COLOR1: vec3(0.000,0.000,0.000)
+
+    dots-rev:
+        shaders:
+            defines:
+                COLOR1: vec3(0.000,0.000,0.000)
+
+    dots-rev-grid:
+        shaders:
+            defines:
+                COLOR1: vec3(0.000,0.000,0.000)
+
+    horizontal-bars:
+        shaders:
+            defines:
+                COLOR1: vec3(0.000,0.000,0.000)
+
+    horizontal-bars-rev:
+        shaders:
+            defines:
+                COLOR1: vec3(0.000,0.000,0.000)
+
+textures:
+    building-grid:
+        url: images/building-grid-hi-contrast3.gif

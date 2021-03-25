@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+    "-//Puppy Crawl//DTD Suppressions 1.1//EN"
+    "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+
+<suppressions>
+    <suppress checks="MethodName" files=".*src/test/java/*" />
+    <suppress checks="MemberName" files=".*src/test/java/*" />
+    <suppress checks="MagicNumberCheck" files=".*src/test/java/*" />
+    <suppress checks="JavadocMethod" files=".*src/test/java/*" />
+    <suppress checks="JavadocMethod" files="DependencyInjector.java" />
+    <suppress checks="JavadocType" files=".*src/test/java/*" />
+    <suppress checks="JavadocStyle" files=".*src/test/java/*" />
+    <suppress checks="VisibilityModifier" files=".*src/test/java/*" />
+    <suppress checks="ConstantName" files="src/main/java/com/mapzen/places/api/Places.java"/>
+    <suppress checks="ParameterNumberCheck" files="src/main/java/com/mapzen/places/api/internal/PlaceImpl.java"/>
+    <suppress checks="LineLength" files="OkHttp3TestUtils.java"/>
+    <suppress checks="TypeName" files="R.java" />
+    <suppress checks="ConstantName" files="R.java" />
+    <suppress checks="ParameterNumberCheck" files="src/main/java/com/mapzen/android/graphics/MapzenMap.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="src/main/java/com/mapzen/android/graphics/TmpHttpHandler.java"/>
+    <suppress checks="ParameterNumberCheck" files="src/main/java/com/mapzen/android/graphics/MapReadyInitializer.java"/>
+    <suppress checks="ParameterNumberCheck" files="src/main/java/com/mapzen/android/graphics/model/MarkerManager.java"/>
+    <suppress checks="ParameterNumberCheck" files="src/main/java/com/mapzen/android/graphics/model/BitmapMarkerManager.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="src/main/java/com/mapzen/android/routing/MapzenRouterHttpHandler"/>
+</suppressions>

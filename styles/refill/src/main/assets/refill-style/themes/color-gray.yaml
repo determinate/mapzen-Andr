@@ -1,0 +1,22 @@
+global:
+    # GRAY
+    black_color:                [0.650,0.650,0.650]
+    dark_color:                 [0.680,0.680,0.680]
+    mid_color:                  [0.722,0.722,0.722]
+    midlight_color:             [0.788,0.788,0.788]
+    light_color:                [0.824,0.824,0.824]
+    lighter_color:              [0.894,0.894,0.894]
+    lightest_color:             [0.929,0.929,0.929]
+    ultralight_color:           [0.965,0.965,0.965]
+    offwhite_color:             [0.976,0.976,0.976]
+    white_color:                [1.00,1.00,1.00]
+    transparent:                [0.929,0.929,0.929,0.250]
+    route_line:                 [0.313,0.482,0.580]
+
+    # To make Refill's colorize-able icons play nice with other styles
+    # we re-state the global here in the Refill color theme to use colorized_icons.
+    # This allows the Refill color theme to import *after* say Walkabout icons
+    # and then colorize Walkabout's icons. But when imported before Walkabout icons
+    # then Walkabout icons would not be colorized as Walkabout icons re-set the
+    # global to "" (null).
+    sdk_icon_color_style: colorized_icons

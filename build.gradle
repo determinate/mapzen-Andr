@@ -1,0 +1,104 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+  repositories {
+    jcenter()
+    google()
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:3.0.0'
+    classpath 'net.researchgate:gradle-release:2.4.0'
+
+    // NOTE: Do not place your application dependencies here; they belong
+    // in the individual module build.gradle files
+  }
+}
+
+apply plugin: 'net.researchgate.release'
+
+task build(dependsOn: [':core:build', ':mapzen-android-sdk:build', ':mapzen-places-api:build'])
+
+allprojects {
+  repositories {
+    jcenter()
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    maven { url "https://maven.google.com" }
+  }
+}
+
+subprojects {
+  task verify(dependsOn: ['compileDebugSources',
+                          'testDebugUnitTest',
+                          'checkstyle',
+                          'lint'])
+
+  task ktverify(dependsOn: ['verify',
+                            'ktlintMainCheck'])
+
+  tasks.withType(Test) {
+    testLogging {
+      exceptionFormat "full"
+      events "skipped", "passed", "failed"
+      showStandardStreams true
+    }
+  }
+}
+
+task clean(type: Delete) {
+  delete rootProject.buildDir
+}
+
+task installSdk {
+  description 'Builds and installs the Mapzen Android SDK to the local maven repository'
+  dependsOn ':core:verify',
+      ':core:install',
+      ':mapzen-android-sdk:verify',
+      ':mapzen-android-sdk:install'
+}
+
+task installPlaces {
+  description 'Builds and installs the Mapzen Places API to the local maven repository'
+  dependsOn ':core:verify',
+      ':core:install',
+      ':mapzen-places-api:verify',
+      ':mapzen-places-api:install'
+}
+
+task installSdkDemo {
+  description 'Builds and installs the Mapzen Android SDK demo to a connected emulator or device'
+  dependsOn 'installSdk',
+      ':samples_mapzen-android-sdk-sample:installDebug'
+}
+
+task installPlacesDemo {
+  description 'Builds and installs the Mapzen Places API demo to a connected emulator or device'
+  dependsOn 'installPlaces',
+      ':samples_mapzen-places-api-sample:installDebug'
+}
+
+task installSdkSampleApp {
+  description 'Builds and installs the redesigned Mapzen Android SDK sample app to a connected emulator or device'
+  dependsOn 'installSdkSampleApp',
+      ':samples_mapzen-sample:installDebug'
+}
+
+release {
+  tagTemplate = 'v${version}'
+  versionPropertyFile = 'gradle.properties'
+  versionProperties = ['VERSION_NAME']
+  newVersionCommitMessage = '[Gradle Release Plugin] - mapzen-android-sdk new version commit:'
+}
+
+project.ext.preDexLibs = !project.hasProperty('disablePreDex')
+
+subprojects {
+  project.plugins.whenPluginAdded { plugin ->
+    if ("com.android.build.gradle.AppPlugin".equals(plugin.class.name)) {
+      project.android.dexOptions.preDexLibraries = rootProject.ext.preDexLibs
+    } else if ("com.android.build.gradle.LibraryPlugin".equals(plugin.class.name)) {
+      project.android.dexOptions.preDexLibraries = rootProject.ext.preDexLibs
+    }
+  }
+}

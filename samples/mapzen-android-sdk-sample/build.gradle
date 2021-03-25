@@ -1,0 +1,44 @@
+apply plugin: 'com.android.application'
+apply plugin: 'checkstyle'
+
+def MAPZEN_API_KEY = hasProperty('mapzenApiKey') ? '"' + mapzenApiKey + '"' : "null";
+
+android {
+  compileSdkVersion 26
+  buildToolsVersion '26.0.2'
+
+  defaultConfig {
+    applicationId "com.mapzen.android.sdk.sample"
+    minSdkVersion 15
+    targetSdkVersion 26
+    versionCode 1
+    versionName "1.0"
+    buildConfigField "String", "MAPZEN_API_KEY", MAPZEN_API_KEY
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+
+  lintOptions {
+    abortOnError false
+  }
+}
+
+task checkstyle(type: Checkstyle) {
+  configFile file("${project.rootDir}/config/checkstyle/checkstyle.xml")
+  source 'src'
+  include '**/*.java'
+  exclude '**/gen/**'
+
+  classpath = files()
+}
+
+dependencies {
+  implementation(project(':mapzen-android-sdk'))
+  implementation(project(':tron'))
+  implementation 'com.android.support:appcompat-v7:26.1.0'
+  implementation 'com.android.support:design:26.1.0'
+}

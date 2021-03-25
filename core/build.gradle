@@ -1,0 +1,100 @@
+buildscript {
+  repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {
+      url 'https://plugins.gradle.org/m2/'
+    }
+  }
+  dependencies {
+    classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+  }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'checkstyle'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = GROUP
+version = VERSION_NAME
+project.archivesBaseName = POM_ARTIFACT_ID
+
+ext.tangram_version = "0.8.1"
+
+def SDK_VERSION = hasProperty('version') ? '"' + version + '"' : "null";
+
+android {
+  compileSdkVersion 26
+  buildToolsVersion '26.0.2'
+
+  defaultConfig {
+    minSdkVersion 15
+    targetSdkVersion 26
+    versionCode 1
+    versionName "1.0"
+    resValue "string", "tangram_version", "${tangram_version}"
+    buildConfigField "String", "SDK_VERSION", SDK_VERSION
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+
+  testOptions {
+    unitTests.returnDefaultValues = true
+  }
+
+  lintOptions {
+    abortOnError false
+  }
+}
+
+task checkstyle(type: Checkstyle) {
+  configFile file("${project.rootDir}/config/checkstyle/checkstyle.xml")
+  source 'src'
+  include '**/*.java'
+  exclude '**/gen/**'
+
+  classpath = files()
+}
+
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
+
+task submodules {
+  def folder = new File( 'styles/walkabout/src/main/assets/walkabout-style/walkabout-style.yaml' )
+  if(!folder.exists()) {
+    throw new GradleException("Submodules aren't present, please run:\n`git submodule init`, " +
+        "\n`git submodule update`\nfrom your root directory")
+
+  }
+}
+
+assemble.doFirst {
+  submodules
+}
+
+dependencies {
+  implementation 'com.android.support:appcompat-v7:26.1.0'
+
+  implementation project(':bubble-wrap')
+  implementation project(':cinnabar')
+  implementation project(':refill')
+  implementation project(':walkabout')
+  api "com.mapzen.tangram:tangram:$tangram_version"
+  api 'com.mapzen.android:pelias-android-sdk:1.2.1'
+  api 'com.mapzen.android:lost:3.0.3'
+
+  api 'com.google.dagger:dagger:2.0'
+  api 'javax.annotation:javax.annotation-api:1.2'
+
+  annotationProcessor 'com.google.dagger:dagger-compiler:2.0'
+
+  testImplementation 'junit:junit:4.12'
+  testImplementation 'org.assertj:assertj-core:1.7.1'
+  testImplementation 'org.powermock:powermock:1.6.4'
+  testImplementation 'org.powermock:powermock-module-junit4:1.6.4'
+  testImplementation 'org.powermock:powermock-api-mockito:1.6.4'
+}
